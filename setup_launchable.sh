@@ -15,13 +15,16 @@ source .venv/bin/activate
 export PATH="$HOME/.local/bin:$PATH"
 uv sync --extra cuda13
 
+su rapids
 # Install Jupyter and JupyterLab
 uv pip install ipykernel
 mamba install -c cupy==14 numpy==2.2.6 -y
 
 # Create a Jupyter kernel for this environment
-uv run python -m ipykernel install --prefix /opt/conda/share/--user --name=out-of-core --display-name "Out of Core Notebook"
+uv run python -m ipykernel install --prefix /opt/conda/share/ --name=out-of-core --display-name "Out of Core Notebook"
 
 set -m
+
+exit
 # Start the primary process and put it in the background
 jupyter-lab --notebook-dir=/notebooks --ip=0.0.0.0 --no-browser --NotebookApp.token='' --NotebookApp.allow_origin='*' --allow-root
