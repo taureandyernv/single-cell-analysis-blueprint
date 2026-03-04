@@ -7,17 +7,12 @@ uv --version
 cd /notebooks
 uv pip install --system -r requirements.txt
 
-# Install new kernel
-python -m venv .venv
-source .venv/bin/activate
-
 # Install with all dependencies using uv for CUDA 13
 export PATH="$HOME/.local/bin:$PATH"
 uv sync --extra cuda13
 
 # Install Jupyter and JupyterLab
-uv pip install ipykernel
-mamba install -c cupy==14 numpy==2.2.6 -y
+mamba create --name test -c python=3.13 conda-forge cupy=14 numpy=2.2.6 -y
 
 # Create a Jupyter kernel for this environment
 uv run python -m ipykernel install --prefix /opt/conda/ --name=out-of-core --display-name "Out of Core Notebook"
